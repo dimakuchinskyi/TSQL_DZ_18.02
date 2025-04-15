@@ -4,84 +4,84 @@ use Academy;
 go
 create table Faculties
 (
-    Id int identity(1,1) not null primary key,
-    Name nvarchar(100) not null unique
+    Id   int identity (1,1) not null primary key,
+    Name nvarchar(100)      not null unique
 );
 create table Departments
 (
-    Id int identity(1,1) not null primary key,
-    Building int not null check(Building between 1 and 5),
-    Financing money not null check(Financing >= 0),
-    Name nvarchar(100) not null unique,
-    FacultyId int not null,
-    constraint FK_Departments_Faculties foreign key (FacultyId) references Faculties(Id)
+    Id        int identity (1,1) not null primary key,
+    Building  int                not null check (Building between 1 and 5),
+    Financing money              not null check (Financing >= 0),
+    Name      nvarchar(100)      not null unique,
+    FacultyId int                not null,
+    constraint FK_Departments_Faculties foreign key (FacultyId) references Faculties (Id)
 );
 create table Groups
 (
-    Id int identity(1,1) not null primary key,
-    Name nvarchar(10) not null unique,
-    Year int not null check(Year between 1 and 5),
-    DepartmentId int not null,
-    constraint FK_Groups_Departments foreign key (DepartmentId) references Departments(Id)
+    Id           int identity (1,1) not null primary key,
+    Name         nvarchar(10)       not null unique,
+    Year         int                not null check (Year between 1 and 5),
+    DepartmentId int                not null,
+    constraint FK_Groups_Departments foreign key (DepartmentId) references Departments (Id)
 );
 create table Curators
 (
-    Id int identity(1,1) not null primary key,
-    Name nvarchar(max) not null,
-    Surname nvarchar(max) not null
+    Id      int identity (1,1) not null primary key,
+    Name    nvarchar(max)      not null,
+    Surname nvarchar(max)      not null
 );
 create table GroupsCurators
 (
-    Id int identity(1,1) not null primary key,
-    CuratorId int not null,
-    GroupId int not null,
-    constraint FK_GroupsCurators_Curators foreign key (CuratorId) references Curators(Id),
-    constraint FK_GroupsCurators_Groups foreign key (GroupId) references Groups(Id)
+    Id        int identity (1,1) not null primary key,
+    CuratorId int                not null,
+    GroupId   int                not null,
+    constraint FK_GroupsCurators_Curators foreign key (CuratorId) references Curators (Id),
+    constraint FK_GroupsCurators_Groups foreign key (GroupId) references Groups (Id)
 );
 create table Students
 (
-    Id int identity(1,1) not null primary key,
-    Name nvarchar(max) not null,
-    Surname nvarchar(max) not null,
-    Rating int not null check(Rating between 0 and 5)
+    Id      int identity (1,1) not null primary key,
+    Name    nvarchar(max)      not null,
+    Surname nvarchar(max)      not null,
+    Rating  int                not null check (Rating between 0 and 5)
 );
 create table GroupsStudents
 (
-    Id int identity(1,1) not null primary key,
-    GroupId int not null,
-    StudentId int not null,
-    constraint FK_GroupsStudents_Groups foreign key (GroupId) references Groups(Id),
-    constraint FK_GroupsStudents_Students foreign key (StudentId) references Students(Id)
+    Id        int identity (1,1) not null primary key,
+    GroupId   int                not null,
+    StudentId int                not null,
+    constraint FK_GroupsStudents_Groups foreign key (GroupId) references Groups (Id),
+    constraint FK_GroupsStudents_Students foreign key (StudentId) references Students (Id)
 );
 create table Subjects
 (
-    Id int identity(1,1) not null primary key,
-    Name nvarchar(100) not null unique
+    Id   int identity (1,1) not null primary key,
+    Name nvarchar(100)      not null unique
 );
 create table Teachers
 (
-    Id int identity(1,1) not null primary key,
-    Name nvarchar(max) not null,
-    Surname nvarchar(max) not null,
-    Salary money not null check(Salary > 0),
-    IsProfessor bit not null default 0
+    Id          int identity (1,1) not null primary key,
+    Name        nvarchar(max)      not null,
+    Surname     nvarchar(max)      not null,
+    Salary      money              not null check (Salary > 0),
+    IsProfessor bit                not null default 0
 );
 create table Lectures
 (
-    Id int identity(1,1) not null primary key,
-    Date date not null check(Date <= getdate()),
-    SubjectId int not null,
-    TeacherId int not null,
-    constraint FK_Lectures_Subjects foreign key (SubjectId) references Subjects(Id),
-    constraint FK_Lectures_Teachers foreign key (TeacherId) references Teachers(Id)
+    Id        int identity (1,1) not null primary key,
+    Date      date               not null check (Date <= getdate()),
+    SubjectId int                not null,
+    TeacherId int                not null,
+    constraint FK_Lectures_Subjects foreign key (SubjectId) references Subjects (Id),
+    constraint FK_Lectures_Teachers foreign key (TeacherId) references Teachers (Id)
 );
 create table GroupsLectures
 (
-    Id int identity(1,1) not null primary key,
-    GroupId int not null,
-    LectureId int not null,
-    constraint FK_GroupsLectures_Groups foreign key (GroupId) references Groups(Id),
-    constraint FK_GroupsLectures_Lectures foreign key (LectureId) references Lectures(Id)
+    Id        int identity (1,1) not null primary key,
+    GroupId   int                not null,
+    LectureId int                not null,
+    constraint FK_GroupsLectures_Groups foreign key (GroupId) references Groups (Id),
+    constraint FK_GroupsLectures_Lectures foreign key (LectureId) references Lectures (Id)
 );
 insert into Faculties (Name)
 values (N'Computer Science'),
@@ -129,7 +129,17 @@ values ('2023-10-01', 1, 1),
        ('2023-10-04', 1, 1),
        ('2023-10-05', 1, 1),
        ('2023-10-06', 1, 1),
-       ('2023-10-07', 1, 1);
+       ('2023-10-07', 1, 1),
+       ('2023-10-08', 1, 1),
+       ('2023-10-09', 1, 1),
+       ('2023-10-10', 1, 1),
+       ('2023-10-11', 1, 1),
+       ('2023-10-01', 2, 2),
+       ('2023-10-02', 2, 2),
+       ('2023-10-03', 2, 2),
+       ('2023-10-04', 2, 2),
+       ('2023-10-05', 2, 2),
+       ('2023-10-06', 2, 2);
 insert into GroupsLectures (GroupId, LectureId)
 values (1, 1),
        (1, 2),
@@ -137,7 +147,16 @@ values (1, 1),
        (1, 4),
        (1, 5),
        (1, 6),
-       (1, 7);
+       (1, 7),
+       (1, 8),
+       (1, 9),
+       (1, 10),
+       (1, 11),
+       (1, 12),
+       (1, 13),
+       (1, 14),
+       (1, 15),
+       (1, 16);
 select Building
 from Departments
 group by Building
@@ -175,26 +194,25 @@ from Groups g
 group by g.Name
 having count(gc.CuratorId) > 1;
 go
-select g.Name
-from Groups g
-         join GroupsStudents gs on g.Id = gs.GroupId
-         join Students s on gs.StudentId = s.Id
-group by g.Name
-having avg(s.Rating) < (select min(avg(s.Rating))
-                        from Groups g
-                                 join GroupsStudents gs on g.Id = gs.GroupId
-                                 join Students s on gs.StudentId = s.Id
-                        where g.Year = 5
-                        group by g.Name);
-go
-select f.Name
-from Faculties f
-         join Departments d on f.Id = d.FacultyId
-group by f.Name
-having sum(d.Financing) > (select sum(d.Financing)
-                           from Faculties f
-                                    join Departments d on f.Id = d.FacultyId
-                           where f.Name = N'Computer Science');
+with GroupRatings as (
+    select g.Name as GroupName, avg(s.Rating) as AvgRating
+    from Groups g
+             join GroupsStudents gs on g.Id = gs.GroupId
+             join Students s on gs.StudentId = s.Id
+    group by g.Name
+),
+     MinGroupRating as (
+         select min(AvgRating) as MinAvgRating
+         from GroupRatings
+         where GroupName in (
+             select g.Name
+             from Groups g
+             where g.Year = 5
+         )
+     )
+select gr.GroupName
+from GroupRatings gr
+         join MinGroupRating m on gr.AvgRating < m.MinAvgRating;
 go
 select s.Name, t.Name + N' ' + t.Surname as TeacherName
 from Lectures l
@@ -219,3 +237,5 @@ where g.DepartmentId = (select Id from Departments where Name = N'Software Devel
 
 use master;
 drop database Academy;
+
+select Id from Lectures;
